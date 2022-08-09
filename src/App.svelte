@@ -19,7 +19,8 @@
       description: 'In this meetup, we will have some experts that teach you how to code!',
       imageUrl: 'https://evelongames.com/wp-content/uploads/2022/04/MaleniaEspadaMiquella.jpg',
       address: '27th Nerd Road, 32523 New York',
-      contactEmail: 'code@test.com'
+      contactEmail: 'code@test.com',
+      isFavourite: false
     },
     {
       id: 'm2',
@@ -28,7 +29,8 @@
       description: 'We will simply swim some rounds!',
       imageUrl: 'https://gcdn.lanetaneta.com/wp-content/uploads/2022/03/Elden-Ring-Quien-es-la-reina-Marika-segun-Lore.jpg',
       address: '27th Nerd Road, 32523 New York',
-      contactEmail: 'swim@test.com'
+      contactEmail: 'swim@test.com',
+      isFavourite: false
     }
   ]
 
@@ -43,6 +45,16 @@
       contactEmail: email
     }
     meetups = [...meetups, newMeetup] /* WE CAN CHANGE THE ORDER OF THIS ARRAY IF WE WANT THE LAST MEETUP TO APPEAR FIRST  [newMeetup, ...meetups] */
+  }
+
+  function toggleFavourite(event){
+    const id = event.detail
+    const updatedMeetup = {...meetups.find(m => m.id === id)}
+    updatedMeetup.isFavourite = !updatedMeetup.isFavourite
+    const meetupIndex = meetups.findIndex(m => m.id === id)
+    const updatedMeetups = [...meetups]
+    updatedMeetups[meetupIndex] = updatedMeetup
+    meetups = updatedMeetups
   }
 </script>
 
@@ -60,7 +72,7 @@
 
     <Button type="submit" caption="Save" />
   </form>
-  <MeetupGrid {meetups}/>
+  <MeetupGrid {meetups} on:toggle_favourite={toggleFavourite}/>
 </main>
 
 <style>
