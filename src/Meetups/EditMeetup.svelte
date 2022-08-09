@@ -32,7 +32,7 @@
   <TextInput controlType="text" id="imageUrl" label="Image URL" value={imageUrl} on:input={event => (imageUrl = event.target.value)} />
   <TextInput controlType="email" id="email" label="Email" value={email} on:input={event => (email = event.target.value)} />
   <TextInput id="description" controlType="textarea" rows="3" label="Description" value={description} on:input={event => (description = event.target.value)} />
-  <Button type="submit" caption="Save" />
+  <Button type="submit">Save</Button>
 </form>
 
 <style>
