@@ -4,15 +4,37 @@
   export let label
   export let rows = null
   export let value
-</script>
+  export let valid = true
+  export let validityMessage = ""
 
+  let touched = false
+</script>
 
 <div class="form_control">
   <label for={id}>{label}</label>
-  {#if controlType === 'textarea'}
-    <textarea rows={rows} id={id} value={value} on:input/> <!-- This self-closing tag is not regular HTML, we can do that thanks to Svelte compiler -->
+  {#if controlType === "textarea"}
+    <textarea
+      class:invalid={!valid && touched}
+      {rows}
+      {id}
+      {value}
+      on:input
+      on:blur={() => (touched = true)}
+    />
+    <!-- This self-closing tag is not regular HTML, we can do that thanks to Svelte compiler -->
   {:else}
-    <input type={controlType} id={id} value={value} on:input>
+    <input
+      class:invalid={!valid && touched}
+      type={controlType}
+      {id}
+      {value}
+      on:input
+      on:blur={() => (touched = true)}
+    />
+  {/if}
+
+  {#if validityMessage && !valid && touched}
+    <p class="error-message">{validityMessage}</p>
   {/if}
 </div>
 
@@ -47,5 +69,12 @@
     width: 100%;
     margin: 0.25rem 0;
   }
-
+  .invalid {
+    border-color: red;
+    background-color: #fde3e3;
+  }
+  .error-message {
+    color: red;
+    margin: 0.25rem 0;
+  }
 </style>
